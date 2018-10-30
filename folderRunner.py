@@ -7,15 +7,21 @@ job = '15083'
 
 combined = base+yearFolder+job
 
-""" Check to see if folder is of the old type """
 def isOld(path):
+    """ Check to see if folder is of the old type.
+    
+    Args:
+        path (str)
+    
+    Returns:
+        bool"""
     for dirs in os.listdir(path):
         print(dirs)
         if(dirs.startswith('0')):
            return print("This is new Style")
 
 
-h
+
 
 isOld(combined)
 print(combined)
