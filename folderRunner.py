@@ -2,7 +2,7 @@
 import os
 
 base = "\\\hawkeye\\archive\\"
-yearFolder = '2017\\'
+yearFolder = '2009\\'
 job = '15083'
 
 combined = base+yearFolder
@@ -54,7 +54,7 @@ def findParents(path):
             
         
 
-isOld(combined+"17208")
+isOld(combined+"09020")
 #findParents(combined)
 #print(combined)
 
