@@ -2,10 +2,10 @@
 import os
 
 base = "\\\hawkeye\\archive\\"
-yearFolder = '2010\\'
-job = '15083'
-
+yearFolder = '2013\\'
+# job = '15083'
 combined = base+yearFolder
+
 slash = '\\'
 
 
@@ -14,7 +14,7 @@ def hasSuffix(path):
 
     Args:
         path(str)
-    Returns: Returns a list of Suffixes or False   
+    Returns: Returns bool  
     """
     suffixList = []
     for dirs in os.listdir(path):
@@ -28,9 +28,20 @@ def hasSuffix(path):
 
                 # return True
     if(len(suffixList) > 0):
-        print(suffixList)
+        #print(suffixList)
+        return True
     else:
         False
+
+def suffixDetails(path):
+    suffixList = []
+    #print(path)
+    for dirs in os.listdir(path):
+        if(os.path.isdir(path+slash+dirs)):
+            if(dirs.startswith('_')):
+                suffixList.append(dirs)
+    if(len(suffixList) > 0):
+        return suffixList
 
 
 def isOld(path):
@@ -48,7 +59,7 @@ def isOld(path):
         if(os.path.isdir(path+slash+dirs)):
             # print('Inside isdir',dirs)
             if(dirs.startswith('0')):
-                print("False, ie it is new", dirs)
+                #print("False, ie it is new", dirs)
                 return False
             else:
                 return True
@@ -85,7 +96,34 @@ def oldStyleHunterGeo(path, searchTerm):
                         location.append(dirPath+slash+line)
     return(location)           
               
-                
+def newStyleHunterGeo(path, searchTerm):
+    """ New style folder scanner and hunter
+    Args:
+        File path (str)
+        Searchable Object (str)
+
+    Returns: 
+        Returns an array
+
+     """
+
+    #print(path, searchTerm)
+    location=[]
+    #print(path)
+    for dirs in os.listdir(path):
+        if(dirs.startswith("07_")):#Limits search directory. Also ignores Suffixes
+            #print(path+slash+dirs)
+            for dirPath, walkDirs, files in os.walk(path+slash+dirs):
+                for line in walkDirs:
+                    if searchTerm.lower() in line.lower():
+                        #print("Found", dirPath+slash+line)
+                        location.append(dirPath+slash+line)
+                for line in files:
+                    if searchTerm.lower() in line.lower():
+                        #print("Found", dirPath+slash+line)
+                        location.append(dirPath+slash+line)
+    return(location)
+
 
 
 def findParents(path):
@@ -98,8 +136,13 @@ def findParents(path):
         dunno yet"""
     for jobNumber in os.listdir(path):  # get job number and enter
         jobNumber = str(jobNumber)
+       
         # print(path+jobNumber)
-        isOld(path+jobNumber)
+        # if(isOld(path+jobNumber)):
+            # print(jobNumber,"OLD")
+        # else: 
+            # print(jobNumber, "NEW")
+
 
         # print(jobNumber)
         # show Contents
@@ -115,12 +158,15 @@ def findParents(path):
 #oldStyleHunter(combined+"10039", "geotech")
 #oldStyleHunter(combined+"10039", "geotech")
 #oldStyleHunter(combined+"10039", "geo")
-test= oldStyleHunterGeo(combined+"10039", "geo")
-print(test)
+
+
+#test= oldStyleHunterGeo(combined+"13375", "geo")
+#test= newStyleHunterGeo(combined+"13375", "fee")
+#print(test)
 
 # isOld(combined+"10050")
 # hasSuffix(combined+"10050")
 
 
-# findParents(combined)
+#findParents(base+yearFolder)
 # print(combined)
