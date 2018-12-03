@@ -1,12 +1,31 @@
 
 import os
 
-base = "\\\hawkeye\\archive\\"
-yearFolder = '2013\\'
+# base = "\\\hawkeye\\archive\\"
+# yearFolder = '2013\\'
+base = "\\\sampras\\Data\\Jobs\\"
+yearFolder = '2015\\'
 # job = '15083'
 combined = base+yearFolder
 
 slash = '\\'
+
+def isempty(path):
+    """ 
+    Check if directory passed contains files
+    Args: 
+        path(str)
+    Returns: bool (True if empty)
+     """
+    print(path)
+    if(len(os.listdir(path))==0):
+        print("True")
+        return True
+    else: 
+        print("False")
+        return False
+
+
 
 
 def hasSuffix(path):
@@ -170,3 +189,6 @@ def findParents(path):
 
 #findParents(base+yearFolder)
 # print(combined)
+
+
+#isempty(combined+"15042"+slash+"07_Reports"+slash+"DESIGNREPORTS")
