@@ -17,12 +17,12 @@ def isempty(path):
         path(str)
     Returns: bool (True if empty)
      """
-    print(path)
+    # print(path)
     if(len(os.listdir(path))==0):
-        print("True")
+        # print("True")
         return True
     else: 
-        print("False")
+        # print("False")
         return False
 
 
@@ -36,16 +36,19 @@ def hasSuffix(path):
     Returns: Returns bool  
     """
     suffixList = []
-    for dirs in os.listdir(path):
-        if(os.path.isdir(path+slash+dirs)):
+    try:
+        for dirs in os.listdir(path):
 
-            if(dirs.startswith('_')):
+            if(os.path.isdir(path+slash+dirs)):
 
-                # print('Yeah Suffix')
-                suffixList.append(dirs)
-                # print(suffixList)
+                if(dirs.startswith('_')):
 
-                # return True
+                    # print('Yeah Suffix')
+                    suffixList.append(dirs)
+                    # print(suffixList)
+
+    except NotADirectoryError:
+        pass                # return True
     if(len(suffixList) > 0):
         #print(suffixList)
         return True
