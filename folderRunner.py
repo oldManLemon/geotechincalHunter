@@ -65,7 +65,7 @@ def hasSuffix(path):
 def suffixDetails(path):
     """ 
     Should only be used when suffix is confirmed
-    
+
     Args: path(str)
 
     Returns: array(str)
@@ -145,18 +145,21 @@ def newStyleHunterGeo(path, searchTerm):
     #print(path, searchTerm)
     location=[]
     #print(path)
-    for dirs in os.listdir(path):
-        if(dirs.startswith("07_")):#Limits search directory. Also ignores Suffixes
-            #print(path+slash+dirs)
-            for dirPath, walkDirs, files in os.walk(path+slash+dirs):
-                for line in walkDirs:
-                    if searchTerm.lower() in line.lower():
-                        #print("Found", dirPath+slash+line)
-                        location.append(dirPath+slash+line)
-                for line in files:
-                    if searchTerm.lower() in line.lower():
-                        #print("Found", dirPath+slash+line)
-                        location.append(dirPath+slash+line)
+    try:
+        for dirs in os.listdir(path):
+            if(dirs.startswith("07_")):#Limits search directory. Also ignores Suffixes
+                #print(path+slash+dirs)
+                for dirPath, walkDirs, files in os.walk(path+slash+dirs):
+                    for line in walkDirs:
+                        if searchTerm.lower() in line.lower():
+                            #print("Found", dirPath+slash+line)
+                            location.append(dirPath+slash+line)
+                    for line in files:
+                        if searchTerm.lower() in line.lower():
+                            #print("Found", dirPath+slash+line)
+                            location.append(dirPath+slash+line)
+    except NotADirectoryError:
+        pass                        
     return(location)
 
 
