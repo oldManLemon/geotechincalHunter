@@ -16,14 +16,19 @@ def isempty(path):
     Args: 
         path(str)
     Returns: bool (True if empty)
+    
+    Exceptions: If folder/file not found will 'pass'
      """
     # print(path)
-    if(len(os.listdir(path))==0):
-        # print("True")
-        return True
-    else: 
-        # print("False")
-        return False
+    try:
+        if(len(os.listdir(path))==0):
+            # print("True")
+            return True
+        else: 
+            # print("False")
+            return False
+    except FileNotFoundError:
+        pass
 
 
 
@@ -33,7 +38,9 @@ def hasSuffix(path):
 
     Args:
         path(str)
-    Returns: Returns bool  
+    Returns: Returns bool (True if has suffix) 
+
+    Exceptions: Will pass NotADirectoryError
     """
     suffixList = []
     try:
@@ -48,7 +55,7 @@ def hasSuffix(path):
                     # print(suffixList)
 
     except NotADirectoryError:
-        pass                # return True
+        pass                # thumbs.db sometimes cause issues in live documents. 
     if(len(suffixList) > 0):
         #print(suffixList)
         return True
@@ -56,6 +63,13 @@ def hasSuffix(path):
         False
 
 def suffixDetails(path):
+    """ 
+    Should only be used when suffix is confirmed
+    
+    Args: path(str)
+
+    Returns: array(str)
+     """
     suffixList = []
     #print(path)
     for dirs in os.listdir(path):
@@ -73,25 +87,24 @@ def isOld(path):
         path (str)
 
     Returns:bool
+
+    Exceptions: Passes on NotADirectory
         """
-    for dirs in os.listdir(path):
-        # print('Looking at ',dirs)
+    try:
+        for dirs in os.listdir(path):
+            # print('Looking at ',dirs)
 
-        # print(path+slash+dirs)
-        if(os.path.isdir(path+slash+dirs)):
-            # print('Inside isdir',dirs)
-            if(dirs.startswith('0')):
-                #print("False, ie it is new", dirs)
-                return False
-            else:
-                return True
-
-        # if(dirs.startswith('0')):
-        #     print("False, ie it is new", dirs)
-        #     return False
-        # elif(dirs.startswith("_")):
-        #     print("this has a suffix")
-        # #     findParents(path)
+            # print(path+slash+dirs)
+            if(os.path.isdir(path+slash+dirs)):
+                # print('Inside isdir',dirs)
+                if(dirs.startswith('0')):
+                    #print("False, ie it is new", dirs)
+                    return False
+                else:
+                    return True
+    except NotADirectoryError:
+        pass
+           
 
 
 def oldStyleHunterGeo(path, searchTerm):

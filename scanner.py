@@ -58,15 +58,31 @@ def scanLiveFolders(path):  # this is setup to scan in Bornhorstward Style
     # print(path)
     for jobNumber in os.listdir(path):  # get job number and enter
         jobNumber = str(jobNumber)
-        if(bw.hasSuffix(path+slash+jobNumber)):
-
+        if(bw.hasSuffix(path+jobNumber)): #Check if job has suffix
+            systemPath = path+jobNumber
             suffixes = bw.suffixDetails(path+slash+jobNumber)
              
             for suffix in suffixes:
-                try:
-                    print(jobNumber+suffix)
-                except NotADirectoryError:
-                    print('Not a directory Error')    
+                systemPath = path+jobNumber+slash+suffix
+                #print(systemPath)
+                if(bw.isOld(systemPath)):#Test if suffix is old
+                    #print(jobNumber+suffix,"is old")
+                    results = bw.oldStyleHunterGeo(systemPath,'geo') #Search the old way as old is not so well defined for Geo reports
+                    if(len(results) > 0):
+                        print(results)
+                else:
+                    if(bw.isempty(systemPath+slash+'07_REPORTS'+slash+'GEOTECH')==False): #Save Time and Resources, check only if GEOTECH folder is empty
+                        print(systemPath+slash+'07_REPORTS'+slash+'GEOTECH'+" Has stuff")        
+        else: #Ie this job has no Suffixes
+            systemPath = path+jobNumber
+            #print(systemPath, "is suffix free")
+            if(bw.isOld(systemPath)):
+                #print(systemPath)
+                results = bw.oldStyleHunterGeo(systemPath,'geo') #It looks for docs first so if it is just a corresp folder it will be ignored
+            else:
+                if(bw.isempty(systemPath+slash+'07_REPORTS'+slash+'GEOTECH')==False):
+                    print(systemPath+slash+'07_REPORTS'+slash+'GEOTECH'+" Has stuff")  
+
                                  
 
     log.close()      
@@ -76,5 +92,5 @@ def scanLiveFolders(path):  # this is setup to scan in Bornhorstward Style
 
 
 
-scanLiveFolders(base+yearFolder)
+#scanLiveFolders(base+yearFolder)
 
